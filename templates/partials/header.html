@@ -1,0 +1,135 @@
+{% load static %}
+<html lang="en">
+<head>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #2d3748;
+            color: #ffffff;
+            padding: 0 0 ;
+        }
+
+        .logo {
+            display: flex !important;
+            margin: -90px;
+            align-items: center !important;
+            text-decoration: none !important;
+        }
+
+        .logo-img {
+            height: 230px !important;
+            width: auto !important;
+            margin-left: -10px !important;
+            margin-top: 15px !important;
+        }
+
+        .nav-links {
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #d1d5db;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .user-info {
+            margin-left: 5px;
+            color: #d1d5db;
+        }
+
+        .mr-5 hovertext-white {
+
+        }
+
+        .logout-btn,
+        .login-btn,
+        .register-btn {
+            background-color: #4a5568;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border-radius: 25px;
+            margin-right: 30px !important;
+        }
+
+        .logout-btn:hover,
+        .login-btn:hover,
+        .register-btn:hover {
+            background-color: #2d3748;
+            border-radius: 25px;
+        }
+
+        .custom-link{
+            margin-right: 30px !important;
+        }
+
+        .auth-btns button {
+            margin-right: 15px;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 25px;
+        }
+
+        .auth-btns a {
+            text-decoration: none;
+            color: #ffffff;
+        }
+    </style>
+    <title></title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+
+           <a href="{% url 'homepage' %}" class="logo flex title-font font-medium items-center text-white mb-4 md:mb-0">
+               <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo-img ml-1">
+           </a>
+
+            <nav class="nav-links md:ml-auto flex flex-wrap items-center text-base justify-center">
+                <a class="custom-link" href="{% url 'homepage' %}">Home</a>
+                <a class="custom-link" href="{% url 'contact' %}">Contact</a>
+                <a class="custom-link" href="{% url 'addpredict' %}">Add prediction</a>
+                <a class="custom-link" href="{% url 'prediction_history' %}">View prediction history</a>
+            </nav>
+           {% if user.is_authenticated %}
+                <a href="javascript:{document.getElementById('logout').submit()}" class="auth-btn">
+                    <button class="logout-btn">Log Out</button>
+                    <form action="{% url 'logout' %}" method="POST" id='logout'>
+                        {% csrf_token %}
+                        <input type="hidden">
+                    </form>
+                </a>
+                <br>
+                <div class="user-info text-white">
+                    <p>Welcome {{user.username}}</p>
+                </div>
+            {% else %}
+                <div class="auth-btns">
+                    <button class="login-btn">
+                        <a href="{% url 'login' %}">Login</a>
+                    </button>
+                    <button class="register-btn">
+                        <a href="{% url 'register' %}">Register</a>
+                    </button>
+                    <button></button>
+                </div>
+            {% endif %}
+        </div>
+    </header>
+</body>
+</html>
